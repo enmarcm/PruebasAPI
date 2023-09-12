@@ -6,8 +6,17 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "pruebas": "nodemon app.js"
   },
   "author": "Enmanuel Colina",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^4.0.2",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "picocolors": "1.0.0"
+  }
 }
