@@ -7,6 +7,7 @@ import express from "express";
 import picocolors from "picocolors";
 import Middlewares from "./middlewares/middlewares.js";
 import mainRouter from "./routers/mainRouter.js";
+import moviesRouter from "./routers/moviesRouter.js";
 
 /**
  * PUERTO USADO PARA EL SERVIDOR
@@ -18,7 +19,9 @@ const app = express();
 
 app.disable("x-powered-by");
 app.use(Middlewares.midCors);
+
 app.use('/', mainRouter)
+app.use('/movies', moviesRouter)
 
 app.use(Middlewares.notFound);
 

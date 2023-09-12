@@ -7,7 +7,7 @@ import { Router } from "express";
 const mainRouter = Router()
 
 mainRouter.get("/", (req, res) => {
-  res.send("PAGINA PRINCIPAL");
+  res.set('Content-Type', 'text/html').end("PAGINA PRINCIPAL");
 });
 
 export default mainRouter;
