@@ -1,0 +1,13 @@
+{
+  "name": "prueba-api",
+  "version": "1.0.0",
+  "description": "Esta es una prueba de los conocimientos del curso de Node de MiduDev",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Enmanuel Colina",
+  "license": "ISC"
+}
