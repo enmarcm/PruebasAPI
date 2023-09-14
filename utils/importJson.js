@@ -8,8 +8,12 @@ const require = createRequire(import.meta.url)
  * @returns {Object} - JSON importado
  */
 const importJson = ({ pathJson }) => {
-    const json = require(pathJson)
+    try {
+        const json = require(pathJson)
     return json
+    } catch (error) {
+       console.error(error) 
+    }
 }
 
 export default importJson
