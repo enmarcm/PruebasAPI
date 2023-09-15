@@ -1,2 +1,5 @@
-### REQUEST PRUEBA
+### REQUEST GENERAL
 GET http://localhost:1234
+
+### REQUEST PRUEBA PELICULAS
+GET http://localhost:1234/movies
