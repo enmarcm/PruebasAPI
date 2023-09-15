@@ -10,6 +10,8 @@ class MovieController {
     const resultado = await this.movieMovel.getAll();
     res.json(resultado);
   };
+
+  //TODO: hacer resto de metodos
   getByID = async () => {};
   delete = async () => {};
   update = async () => {};

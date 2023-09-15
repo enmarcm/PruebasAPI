@@ -1,4 +1,5 @@
 //@ts-check
+import movieSchema from "../../schemas/movieSchema.js";
 import importJson from "../../utils/importJson.js";
 const movies = importJson({ pathJson: "../json/movies.json" });
 const genreId = importJson({ pathJson: "../json/genre-id.json" });
@@ -72,10 +73,72 @@ class MovieModel {
     return result;
   };
 
-  static getByID = async () => {};
-  static delete = async () => {};
-  static update = async () => {};
-  static create = async () => {};
+  /**
+   * Obtener una pelicula mediante su ID
+   * @param {Object} obj
+   * @param {String} obj.id - ID de la pelicula, es un UUID
+   * @returns {Promise<Object | Boolean> } - Pelicula o false, si no se encuentra
+   */
+  static getByID = async ({ id }) => {
+    const movies = await this.#getMoviGen();
+    const resultado = movies.find((movie) => movie.id === id);  //TODO:: CREAR METODOS PARA OBTENER EL ID
+
+    if (resultado === -1) return false;
+    return resultado;
+  };
+
+  /**
+   * Permite borrar una de las peliculas mediante su ID
+   * @param {Object} obj
+   * @param {String} obj.id - ID de la pelicula, es un UUID
+   * @returns {Promise<Object | Boolean> } - Pelicula o false, si no se encuentra
+   */
+  static delete = async ({ id }) => {
+    const index = movies.findIndex((movie) => movie.id === id);
+    if (index === -1) return false;
+
+    const result = movies.splice(index, 1);
+    return result;
+  };
+
+  /**
+   * Permite actualizar parcialmente una pelicula
+   * @param {Object} obj
+   * @param {Number} obj.id Es el identificador de la pelicula
+   * @param {Object} obj.movie Objeto de pelicula
+   * @returns {Promise<Object | Boolean>} El objeto recien modificado o un false
+   */
+  static update = async ({ id, movie }) => {
+    const index = movies.findIndex((movie) => movie.id === id);
+    if (index === -1) return false;
+
+    const result = await movieSchema.verifyPartialMovie({ movie });
+    if (!result.success) return false;
+
+    const final = {
+      ...movie[index],
+      ...result.data,
+    };
+
+    movie[index] = final;
+
+    return final;
+  };
+
+  /**
+   * Crea un nuevo objeto en el Array de peliculas
+   * @param {Object} obj
+   * @param {Object} obj.movie Objeto de la pelicula
+   * @returns {Promise<Object | Boolean>}
+   */
+  static create = async ({ movie }) => {
+    const newMovie = await movieSchema.verifyMovie({ movie });
+    if (!newMovie.success) return false;
+
+    movies.push(newMovie.data);
+
+    return newMovie.data;
+  };
 }
 
 export default MovieModel;
