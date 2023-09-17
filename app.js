@@ -18,6 +18,7 @@ const PORT = process.env.PORT ?? 1234;
 const app = express();
 
 app.disable("x-powered-by");
+app.use(express.json());
 app.use(Middlewares.midCors);
 
 app.use('/', mainRouter)
