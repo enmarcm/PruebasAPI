@@ -6,14 +6,14 @@ import { z } from "zod";
  */
 const movieSchema = z.object({
   adult: z.boolean(),
-  backdrop_path: z.string().url(),
+  backdrop_path: z.string(),
   genre_ids: z.array(z.number().int()),
   id: z.number().int().positive(),
   original_language: z.string().length(2),
   original_title: z.string(),
   overview: z.string(),
   popularity: z.number().positive(),
-  poster_path: z.string().url(),
+  poster_path: z.string(),
   release_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   title: z.string(),
   video: z.boolean(),

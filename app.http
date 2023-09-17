@@ -3,3 +3,46 @@ GET http://localhost:1234
 
 ### REQUEST PRUEBA PELICULAS
 GET http://localhost:1234/movies
+
+### REQUEST PRUEBA PELICULAS POR GENERO
+GET http://localhost:1234/movies?genre=action
+
+### REQUEST PRUEBA PELICULAS CON LIMITE
+GET http://localhost:1234/movies?limit=3&page=2
+
+### REQUEST POR ID
+GET http://localhost:1234/movies/1008042
+
+### ACTUALIZAR PELICULA
+PATCH http://localhost:1234/movies/1008042
+Content-Type: application/json
+
+{
+  "adult": true
+}
+
+
+### ELIMINAR PELICULA
+DELETE http://localhost:1234/movies/1008042
+
+
+###CREAR PELICULA
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "adult": false,
+    "backdrop_path": "/lDCIQ1Qe7cRnhZ4ybQVVEbadMZ.jpg",
+    "genre_ids": [27, 53],
+    "id": 1008042,
+    "original_language": "en",
+    "original_title": "Talk to Me",
+    "overview": "When a group of friends discover how to conjure spirits using an embalmed hand, they become hooked on the new thrill, until one of them goes too far and unleashes terrifying supernatural forces.",
+    "popularity": 704.524,
+    "poster_path": "/kdPMUMJzyYAc4roD52qavX0nLIC.jpg",
+    "release_date": "2023-07-26",
+    "title": "Talk to Me",
+    "video": false,
+    "vote_average": 7.1,
+    "vote_count": 308
+  }

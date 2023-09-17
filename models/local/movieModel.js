@@ -57,7 +57,9 @@ class MovieModel {
    * @returns {Array<Object>} Array de las peliculas filtradas por un genero
    */
   static #getGenre = ({ genre, peliculasGenero }) =>
-    peliculasGenero.filter((pelicula) => pelicula.genres.includes(genre));
+    peliculasGenero.filter((pelicula) =>
+      pelicula.genres.some((gen) => gen.toLowerCase() === genre.toLowerCase())
+    );
 
   /**
    * Devuelve las peliculas segun la pagina y el limite - PRIVADO
@@ -76,12 +78,12 @@ class MovieModel {
   /**
    * Obtener una pelicula mediante su ID
    * @param {Object} obj
-   * @param {String} obj.id - ID de la pelicula, es un UUID
+   * @param {String | Number} obj.id - ID de la pelicula, es un UUID o un Numero
    * @returns {Promise<Object | Boolean> } - Pelicula o false, si no se encuentra
    */
   static getByID = async ({ id }) => {
     const movies = await this.#getMoviGen();
-    const resultado = movies.find((movie) => movie.id === id);  //TODO:: CREAR METODOS PARA OBTENER EL ID
+    const resultado = movies.find((movie) => movie.id == id); //TODO:: CREAR METODOS PARA OBTENER EL ID
 
     if (resultado === -1) return false;
     return resultado;
@@ -94,7 +96,7 @@ class MovieModel {
    * @returns {Promise<Object | Boolean> } - Pelicula o false, si no se encuentra
    */
   static delete = async ({ id }) => {
-    const index = movies.findIndex((movie) => movie.id === id);
+    const index = movies.findIndex((movie) => movie.id == id);
     if (index === -1) return false;
 
     const result = movies.splice(index, 1);
@@ -104,23 +106,25 @@ class MovieModel {
   /**
    * Permite actualizar parcialmente una pelicula
    * @param {Object} obj
-   * @param {Number} obj.id Es el identificador de la pelicula
+   * @param {Number | String} obj.id Es el identificador de la pelicula
    * @param {Object} obj.movie Objeto de pelicula
    * @returns {Promise<Object | Boolean>} El objeto recien modificado o un false
    */
   static update = async ({ id, movie }) => {
-    const index = movies.findIndex((movie) => movie.id === id);
+    const index = movies.findIndex((mov) => mov.id == id);
     if (index === -1) return false;
 
+    console.log(movie);
+
     const result = await movieSchema.verifyPartialMovie({ movie });
-    if (!result.success) return false;
+    if (!result.success) return result.error;
 
     const final = {
-      ...movie[index],
+      ...movies[index],
       ...result.data,
     };
 
-    movie[index] = final;
+    movies[index] = final;
 
     return final;
   };
@@ -133,7 +137,7 @@ class MovieModel {
    */
   static create = async ({ movie }) => {
     const newMovie = await movieSchema.verifyMovie({ movie });
-    if (!newMovie.success) return false;
+    if (!newMovie.success) return newMovie.error;
 
     movies.push(newMovie.data);
 
